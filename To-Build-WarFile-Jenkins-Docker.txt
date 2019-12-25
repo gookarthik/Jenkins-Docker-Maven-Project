@@ -1,0 +1,68 @@
+yum install java-1.8*
+java -version
+ls -la
+vi .bash_profile
+-----------------------------------------------------------------------------------------
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64
+PATH=$PATH:$JAVA_HOME
+export PATH
+----------------------------------------------------------------------------------------
+yum -y install wget
+wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum -y install jenkins
+systemctl start jenkins
+systemctl enable jenkins
+source ~/.bash_profile
+find / -name javac
+cat /var/lib/jenkins/secrets/initialAdminPassword
+yum install git -y
+find / -name git
+mkdir /home/ToRunMvnPro
+cd
+cd /home/ToRunMvnPro/
+cp /var/lib/jenkins/workspace/ToRunMvnPro/target/ToRunMvnPro-0.0.1-SNAPSHOT.jar /home/ToRunMvnPro/mvn-hello-world.war
+ls
+touch Dockerfile
+cat > Dockerfile
+---------------------------------------------------------
+	FROM tomcat:latest
+		WORKDIR /usr/local/tomcat/webapps
+		COPY mvn-hello-world.jar /usr/local/tomcat/webapps
+		EXPOSE 8080
+		ENV NAME tomcat_crust
+----------------------------------------------------
+
+yum install docker -y
+systemctl start docker
+docker image ls
+docker pull tomcat
+docker container ls
+docker image ls
+docker run -d -p 90:8080 tomcat
+docker build -f Dockerfile -t tomcat_crust .
+docker image ls
+docker container ls
+docker rm -f 6e0663ce6d2a
+docker container ls
+docker run -d -p 90:8080 tomcat_crust
+docker exec -it 97d63d95c9ba /bin/bash    // Container ID
+cd webapps/
+exit
+docker container ls
+docker commit 97d63d95c9ba tomcat_crust2
+docker container ls
+docker image ls
+docker stop de2819b54831
+docker rm -f 97d63d95c9ba
+docker container ls
+docker run -d -p 90:8080 tomcat_crust2
